@@ -21,7 +21,36 @@ maka output:
 */
 
 function shoppingTime(memberId, money) {
-    // you can only write your code here!
+    const listBarang = [
+      {product: 'Sepatu Stacattu', price: 1500000},
+      {product: 'Baju Zoro', price: 500000},
+      {product: 'Baju H&N', price: 250000},
+      {product: 'Sweater Uniklooh', price: 175000},
+      {product: 'Casing Handphone', price: 50000}
+    ]
+    let transaction = {
+      memberId: memberId,
+      money: money,
+      listPurchased: [],
+      changeMoney: money 
+    }
+    if(!memberId){
+      return 'Mohon maaf, toko X hanya berlaku untuk member saja'
+    } 
+    else if (money < listBarang.reduce((min, item) => Math.min(min, item.price), Infinity)){
+      return 'Mohon maaf, uang tidak cukup'
+    } 
+
+    listBarang.forEach((barang) =>{
+      let {product, price} = barang
+      if(price <= transaction['changeMoney']){
+        transaction['listPurchased'].push(product)
+        transaction['changeMoney'] -= price
+      }
+    })
+
+
+    return transaction
   }
   
   // TEST CASES

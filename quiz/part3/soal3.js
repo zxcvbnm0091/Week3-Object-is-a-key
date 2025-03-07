@@ -16,14 +16,14 @@ function countProfit(shoppers) {
                        ['Baju Zoro', 500000, 2],
                        ['Sweater Uniklooh', 175000, 1]
     ];
-    
+    if(shoppers.length == 0) return []
     let products = listBarang.map(([name, price, leftOver]) => ({ 
         name, 
         shoppers: [], 
         leftOver, 
         totalProfit: 0 
     }));
-
+    
     shoppers.forEach((shopper) =>{
         let product = products.find((p) => p.name === shopper.product);
         let itemDetails = listBarang.find(([name]) => name === shopper.product);

@@ -1,60 +1,56 @@
 // Last Logic Challenge Minggu 3 | Ujian
 
-
-
 // Soal 1
 /*
 Implementasikan function deepSum untuk mendapatkan jumlah pertambahan dari angka-angka yang terdapat di dalam array
 */
-function deepSum (arr) {
+function deepSum(arr) {
   // Code disini
+  let sum = 0;
+  if (arr.length < 1) return "No number";
+  for (child of arr) {
+    if (typeof child === "object") {
+      sum += deepSum(child);
+    } else if (typeof child === "number") {
+      sum += child;
+    }
+  }
+  return sum;
 }
 
 //TEST CASE
-console.log(deepSum([
-  [
-    [4, 5, 6],
-    [9, 1, 2, 10],
-    [9, 4, 3]
-  ],
-  [
-    [4, 14, 31],
-    [9, 10, 18, 12, 20],
-    [1, 4, 90]
-  ],
-  [
-    [2, 5, 10],
-    [3, 4, 5],
-    [2, 4, 5, 10]
-  ]
-])); // 316
+console.log(
+  deepSum([
+    [
+      [4, 5, 6],
+      [9, 1, 2, 10],
+      [9, 4, 3],
+    ],
+    [
+      [4, 14, 31],
+      [9, 10, 18, 12, 20],
+      [1, 4, 90],
+    ],
+    [
+      [2, 5, 10],
+      [3, 4, 5],
+      [2, 4, 5, 10],
+    ],
+  ])
+); // 316
 
-console.log(deepSum([
-  [
-    [20, 10],
-    [15],
-    [1, 1]
-  ],
-  [
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-    [2],
-    [9, 11]
-  ],
-  [
-    [3, 5, 1],
-    [1, 5, 3],
-    [1]
-  ],
-  [
-    [2]
-  ]
-])); // 156
+console.log(
+  deepSum([
+    [[20, 10], [15], [1, 1]],
+    [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], [2], [9, 11]],
+    [[3, 5, 1], [1, 5, 3], [1]],
+    [[2]],
+  ])
+); // 156
 
 console.log(deepSum([])); // No number
 
 console.log(""); // end soal 1
-
-
 
 // Soal 2
 /*
@@ -65,12 +61,27 @@ Diberikan sebuah rute, dari A - F. Penumpang diwajibkan membayar Rp2000 setiap m
 Contoh: input: [['Dimitri', 'B', 'F']] output: [{ penumpang: 'Dimitri', naikDari: 'B', tujuan: 'F', bayar: 8000 }]
 */
 function naikAngkot(arrPenumpang) {
-  rute = ['A', 'B', 'C', 'D', 'E', 'F'];
+  rute = ["A", "B", "C", "D", "E", "F"];
   //your code here
+  let result = [];
+  for ([p, start, end] of arrPenumpang) {
+    result.push({
+      penumpang: p,
+      naikDari: start,
+      tujuan: end,
+      bayar: 2000 * (rute.indexOf(end) - rute.indexOf(start)),
+    });
+  }
+  return result;
 }
 
 //TEST CASE
-console.log(naikAngkot([['Dimitri', 'B', 'F'], ['Icha', 'A', 'B']]));
+console.log(
+  naikAngkot([
+    ["Dimitri", "B", "F"],
+    ["Icha", "A", "B"],
+  ])
+);
 // [ { penumpang: 'Dimitri', naikDari: 'B', tujuan: 'F', bayar: 8000 },
 //   { penumpang: 'Icha', naikDari: 'A', tujuan: 'B', bayar: 2000 } ]
 
@@ -78,68 +89,81 @@ console.log(naikAngkot([])); //[]
 
 console.log(""); // end soal 2
 
-
-
 // Soal 3
-function highestScore (students) {
+function highestScore(students) {
   // Code disini
+  let result = {};
+  for (student of students) {
+    if (!result[student.class]) {
+      result[student.class] = student;
+    } else {
+      if (result[student.class].score < student.score) {
+        result[student.class] = student;
+      }
+    }
+  }
+  return result;
 }
 
 // TEST CASE
-console.log(highestScore([
-  {
-    name: 'Dimitri',
-    score: 90,
-    class: 'foxes'
-  },
-  {
-    name: 'Alexei',
-    score: 85,
-    class: 'wolves'
-  },
-  {
-    name: 'Sergei',
-    score: 74,
-    class: 'foxes'
-  },
-  {
-    name: 'Anastasia',
-    score: 78,
-    class: 'wolves'
-  }
-]));
+console.log(
+  highestScore([
+    {
+      name: "Dimitri",
+      score: 90,
+      class: "foxes",
+    },
+    {
+      name: "Alexei",
+      score: 85,
+      class: "wolves",
+    },
+    {
+      name: "Sergei",
+      score: 74,
+      class: "foxes",
+    },
+    {
+      name: "Anastasia",
+      score: 78,
+      class: "wolves",
+    },
+  ])
+);
 // {
 //   foxes: { name: 'Dimitri', score: 90 },
 //   wolves: { name: 'Alexei', score: 85 }
 // }
 
-console.log(highestScore([
-  {
-    name: 'Alexander',
-    score: 100,
-    class: 'foxes'
-  },
-  {
-    name: 'Alisa',
-    score: 76,
-    class: 'wolves'
-  },
-  {
-    name: 'Vladimir',
-    score: 92,
-    class: 'foxes'
-  },
-  {
-    name: 'Albert',
-    score: 71,
-    class: 'wolves'
-  },
-  {
-    name: 'Viktor',
-    score: 80,
-    class: 'tigers'
-  }
-]));
+console.log(
+  highestScore([
+    {
+      name: "Alexander",
+      score: 100,
+      class: "foxes",
+    },
+    {
+      name: "Alisa",
+      score: 76,
+      class: "wolves",
+    },
+    {
+      name: "Vladimir",
+      score: 92,
+      class: "foxes",
+    },
+    {
+      name: "Albert",
+      score: 71,
+      class: "wolves",
+    },
+    {
+      name: "Viktor",
+      score: 80,
+      class: "tigers",
+    },
+  ])
+);
 // {
 //   foxes: { name: 'Alexander', score: 100 },
 //   wolves: { name: 'Alisa', score: 76 },
@@ -149,8 +173,6 @@ console.log(highestScore([
 console.log(highestScore([])); //{}
 
 console.log(""); // end soal 3
-
-
 
 // Soal 4
 /*
@@ -173,32 +195,44 @@ Output yang diharapkan berupa Object dengan format sebagai berikut:
   <class>: [] //NOTE: Jika tidak ada student yang lulus, class ini akan diisi oleh array kosong
 }
 */
-function graduates (students) {
+function graduates(students) {
   // Code disini
+  let lulus = {};
+  for (student of students) {
+    if (student.score > 75) {
+      if (!lulus[student.class]) {
+        lulus[student.class] = [];
+      }
+      lulus[student.class].push({ name: student.name, score: student.score });
+    }
+  }
+  return lulus;
 }
 
-console.log(graduates([
-  {
-    name: 'Dimitri',
-    score: 90,
-    class: 'foxes'
-  },
-  {
-    name: 'Alexei',
-    score: 85,
-    class: 'wolves'
-  },
-  {
-    name: 'Sergei',
-    score: 74,
-    class: 'foxes'
-  },
-  {
-    name: 'Anastasia',
-    score: 78,
-    class: 'wolves'
-  }
-]));
+console.log(
+  graduates([
+    {
+      name: "Dimitri",
+      score: 90,
+      class: "foxes",
+    },
+    {
+      name: "Alexei",
+      score: 85,
+      class: "wolves",
+    },
+    {
+      name: "Sergei",
+      score: 74,
+      class: "foxes",
+    },
+    {
+      name: "Anastasia",
+      score: 78,
+      class: "wolves",
+    },
+  ])
+);
 // {
 //   foxes: [
 //     { name: 'Dimitri', score: 90 }
@@ -209,33 +243,35 @@ console.log(graduates([
 //   ]
 // }
 
-console.log(graduates([
-  {
-    name: 'Alexander',
-    score: 100,
-    class: 'foxes'
-  },
-  {
-    name: 'Alisa',
-    score: 76,
-    class: 'wolves'
-  },
-  {
-    name: 'Vladimir',
-    score: 92,
-    class: 'foxes'
-  },
-  {
-    name: 'Albert',
-    score: 71,
-    class: 'wolves'
-  },
-  {
-    name: 'Viktor',
-    score: 80,
-    class: 'tigers'
-  }
-]));
+console.log(
+  graduates([
+    {
+      name: "Alexander",
+      score: 100,
+      class: "foxes",
+    },
+    {
+      name: "Alisa",
+      score: 76,
+      class: "wolves",
+    },
+    {
+      name: "Vladimir",
+      score: 92,
+      class: "foxes",
+    },
+    {
+      name: "Albert",
+      score: 71,
+      class: "wolves",
+    },
+    {
+      name: "Viktor",
+      score: 80,
+      class: "tigers",
+    },
+  ])
+);
 // {
 //   foxes: [
 //     { name: 'Alexander', score: 100 },

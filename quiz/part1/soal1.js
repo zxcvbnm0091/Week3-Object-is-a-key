@@ -32,6 +32,12 @@ console.log("");
 // cari faktor persekutuan terbesar
 function fpb(angka1, angka2) {
   // you can only write your code here!
+  for (let i = Math.min(angka1, angka2); i >= 1; i--) {
+    if (angka1 % i == 0 && angka2 % i == 0) {
+      return i
+    }
+  }
+  return "no same factor found"
 }
 
 // TEST CASES
@@ -50,6 +56,20 @@ console.log("");
 // ==========================
 function cariMedian(arr) {
   // you can only write your code here!
+  let halfLen = arr.length / 2
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length - 1 - i; j++) {
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+      }
+    }
+  }
+  
+  if (arr.length % 2 == 0) {
+    return (arr[halfLen] + arr[halfLen - 1]) / 2
+  }
+  
+  return arr[Math.floor(halfLen)]
 }
 
 // TEST CASES
@@ -77,6 +97,19 @@ Dan apabila dalam modus hanya ada 1 nilai yang sama maka function akan me-return
 */
 function cariModus(arr) {
   // you can only write your code here!
+  let myObj = {}
+  for (let i = 0; i < arr.length; i++) {
+    if (myObj[arr[i]]) {
+      myObj[arr[i]] += 1
+    }
+    else {
+      myObj[arr[i]] = 1
+    }
+  }
+  let max = Math.max(...Object.values(myObj))
+  if (max === 1) return -1
+  const key = Object.keys(myObj).find((key) => myObj[key] === max)
+  return key
 }
 
 // TEST CASES
@@ -97,6 +130,13 @@ console.log("");
 // intinya ubah huruf menjadi huruf setelahnya
 function ubahHuruf(kata) {
   // you can only write your code here!
+  let result = ""
+  for (let i = 0; i < kata.length; i++) {
+    let code = kata.charCodeAt(i) + 1
+    result += String.fromCharCode(code)
+  }
+  return result
+  
 }
 
 // TEST CASES
